@@ -1,0 +1,55 @@
+{
+  "name": "Job Filter AI",
+  "version": "1.0.0",
+  "description": "Filter job postings using your resume with RAG",
+  "manifest_version": 3,
+  "permissions": ["storage", "activeTab", "tabs"],
+  "host_permissions": [
+    "https://*.linkedin.com/*",
+    "https://*.handshake.com/*",
+    "https://*.glassdoor.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://*.linkedin.com/*"],
+      "js": ["content/linkedin.js"],
+      "css": ["content/styles.css"]
+    },
+    {
+      "matches": ["https://*.handshake.com/*"],
+      "js": ["content/handshake.js"],
+      "css": ["content/styles.css"]
+    },
+    {
+      "matches": ["https://*.glassdoor.com/*"],
+      "js": ["content/glassdoor.js"],
+      "css": ["content/styles.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/ext-icon.png",
+      "24": "assets/ext-icon.png",
+      "32": "assets/ext-icon.png"
+    },
+    "default_title": "Job Filter AI"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*.png"],
+      "matches": ["https://*/*"]
+    }
+  ],
+  "icons": {
+    "16": "assets/ext-icon.png",
+    "24": "assets/ext-icon.png",
+    "32": "assets/ext-icon.png",
+    "48": "assets/ext-icon.png",
+    "128": "assets/ext-icon.png"
+  }
+}
