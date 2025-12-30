@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="popup.css" />
     <title>Job Filter AI</title>
   </head>
   <body>
@@ -13,7 +14,7 @@
       </div>
       <div class="section" id="upload section">
         <h3>Upload your Resume</h3>
-        <div class="upload-here">
+        <div class="upload-area">
           <input
             type="file"
             id="resumeUpload"
@@ -21,7 +22,7 @@
             hidden
           />
           <label for="resumeUpload" class="upload-btn">Choose File</label>
-          <span id="fileName">🐵No file chosen</span>
+          <span id="file-Name">🐵No file chosen</span>
         </div>
         <button id="process-btn" class="btn btn-primary" disabled>
           Process Resume
@@ -43,5 +44,69 @@
         Change Resume
       </button>
     </div>
+
+    <!--Filter Settings-->
+    <div class="section" id="filter-setting" style="display: none">
+      <h3>⚙️ Filter Settings</h3>
+
+      <div class="setting-item">
+        <label for="threshold"
+          >Match Threshold: <span id="threshold-value">70%</span></label
+        >
+        <input
+          type="range"
+          id="threshold"
+          min="0"
+          max="100"
+          value="70"
+          class="slider"
+        />
+        <small>Only show jobs with match score above this threshold</small>
+      </div>
+      <div class="setting-item">
+        <label class="checkbox-label">
+          <input type="checkbox" id="auto-filter" checked />
+          Auto-filter jobs on page load
+        </label>
+      </div>
+      <div class="setting-item">
+        <label class="checkbox-label">
+          <input type="checkbox" id="show-reasons" checked />
+          Show match reasons
+        </label>
+      </div>
+    </div>
+
+    <!--Actions-->
+    <div class="section" id="actions" style="display: none">
+      <h3>⚡️Quick Actions</h3>
+      <button id="scan-btn" class="btn btn-primary btn-block">
+        Scan Current Page
+      </button>
+      <button id="clear-filters-btn" class="btn btn-secondary btn-block">
+        Clear All Filters
+      </button>
+    </div>
+
+    <!--Stats-->
+    <div class="section" id="stats" style="display: none">
+      <h3>📊 Today's Stats</h3>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="jobs-scanned">0</div>
+          <div class="stat-label">Jobs Scanned</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="jobs-matched">0</div>
+          <div class="stat-label">Good Matches</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a href="#" id="settings-link">Settings</a>
+      <a href="#" id="help-link">Help</a>
+    </div>
+    <script type="module" src="popup.js"></script>
   </body>
 </html>
