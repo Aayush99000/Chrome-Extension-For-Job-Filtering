@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Filter AI</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img src="" alt="" class="logo" />
+        <h2>Job Filter AI</h2>
+      </div>
+      <div class="section" id="upload section">
+        <h3>Upload your Resume</h3>
+        <div class="upload-here">
+          <input
+            type="file"
+            id="resumeUpload"
+            accept=".pdf,.doc,.docx"
+            hidden
+          />
+          <label for="resumeUpload" class="upload-btn">Choose File</label>
+          <span id="fileName">🐵No file chosen</span>
+        </div>
+        <button id="process-btn" class="btn btn-primary" disabled>
+          Process Resume
+        </button>
+        <div id="upload-status" class="status"></div>
+      </div>
+    </div>
+
+    <!--Resume info section-->
+    <div class="section" id="resume-info-section" style="display: none">
+      <h3>Resume Loaded</h3>
+      <div id="info-card">
+        <p><strong>File:</strong> <span id="resume-name"></span></p>
+        <p>
+          <strong>Status:</strong> <span id="status-badge success">Active</span>
+        </p>
+      </div>
+      <button id="change-resume-btn" class="btn btn-secondary">
+        Change Resume
+      </button>
+    </div>
+  </body>
+</html>
