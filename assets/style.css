@@ -1,0 +1,121 @@
+/* Match Badge Styles */
+.job-filter-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 8px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.job-filter-badge.high {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.job-filter-badge.medium {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+}
+
+.job-filter-badge.low {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+/* Match Reasons */
+.job-filter-reasons {
+  background: #f9fafb;
+  border-left: 3px solid #667eea;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #374151;
+}
+
+.job-filter-reasons-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #667eea;
+}
+
+.job-filter-reasons ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.job-filter-reasons li {
+  margin: 4px 0;
+  line-height: 1.4;
+}
+
+.job-filter-reasons .match-skill {
+  color: #10b981;
+  font-weight: 500;
+}
+
+.job-filter-reasons .mismatch-skill {
+  color: #ef4444;
+  font-weight: 500;
+}
+
+/* Loading Spinner */
+.job-filter-loading {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #e5e7eb;
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: job-filter-spin 0.6s linear infinite;
+  margin-left: 8px;
+}
+
+@keyframes job-filter-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dimmed job card (low match) */
+.job-filter-dimmed {
+  opacity: 0.5;
+  position: relative;
+}
+
+.job-filter-dimmed::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+}
+
+/* Scan button */
+.job-filter-scan-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  z-index: 9999;
+  transition: all 0.3s;
+}
+
+.job-filter-scan-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
