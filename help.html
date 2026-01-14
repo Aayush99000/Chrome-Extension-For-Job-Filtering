@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Help - Job Filter AI</title>
+    <link href="popup.css" rel="stylesheet" />
+    <style>
+      .back-button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #667eea;
+        text-decoration: none;
+        font-size: 14px;
+        margin-bottom: 15px;
+        font-weight: 500;
+      }
+
+      .back-button:hover {
+        text-decoration: underline;
+      }
+
+      .help-section {
+        margin-bottom: 25px;
+      }
+
+      .help-section h3 {
+        font-size: 15px;
+        color: #374151;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .help-section p {
+        font-size: 13px;
+        color: #6b7280;
+        line-height: 1.6;
+        margin-bottom: 10px;
+      }
+
+      .help-section ol,
+      .help-section ul {
+        font-size: 13px;
+        color: #6b7280;
+        line-height: 1.6;
+        margin-left: 20px;
+      }
+
+      .help-section li {
+        margin-bottom: 8px;
+      }
+
+      .faq-item {
+        background: #f9fafb;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+      }
+
+      .faq-question {
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 6px;
+      }
+
+      .faq-answer {
+        font-size: 12px;
+        color: #6b7280;
+        line-height: 1.5;
+      }
+
+      .contact-info {
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        color: #1e40af;
+      }
+
+      .contact-info a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+
+      .version-info {
+        text-align: center;
+        font-size: 11px;
+        color: #9ca3af;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>❓ Help & Support</h2>
+      </div>
+
+      <div class="section">
+        <a href="popup.html" class="back-button"> ← Back to Main </a>
+
+        <!-- Getting Started -->
+        <div class="help-section">
+          <h3>🚀 Getting Started</h3>
+          <ol>
+            <li>
+              <strong>Upload Your Resume:</strong> Click "Choose File" and
+              select your PDF or DOCX resume
+            </li>
+            <li>
+              <strong>Process:</strong> Click "Process Resume" to analyze your
+              skills and experience
+            </li>
+            <li>
+              <strong>Browse Jobs:</strong> Visit LinkedIn, Indeed, or Glassdoor
+              job pages
+            </li>
+            <li>
+              <strong>See Matches:</strong> Each job will automatically show a
+              match score
+            </li>
+            <li>
+              <strong>Apply Wisely:</strong> Focus on high-match jobs (70%+)
+            </li>
+          </ol>
+        </div>
+
+        <!-- Understanding Match Scores -->
+        <div class="help-section">
+          <h3>📊 Understanding Match Scores</h3>
+          <p>
+            <strong>High Match (70-100%):</strong> Strong alignment with your
+            skills and experience. Good fit!
+          </p>
+          <p>
+            <strong>Medium Match (40-69%):</strong> Partial alignment. Review
+            job details carefully.
+          </p>
+          <p>
+            <strong>Low Match (0-39%):</strong> Limited alignment. May require
+            additional skills.
+          </p>
+          <p style="margin-top: 10px; font-style: italic">
+            Match scores are based on semantic similarity between your resume
+            and job descriptions, not just keyword matching.
+          </p>
+        </div>
+
+        <!-- FAQs -->
+        <div class="help-section">
+          <h3>💡 Frequently Asked Questions</h3>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              Q: Why isn't the extension working on a job site?
+            </div>
+            <div class="faq-answer">
+              A: Make sure you've uploaded your resume first. Then try clicking
+              the "Scan Current Page" button manually. The extension works on
+              LinkedIn, Indeed, and Glassdoor.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              Q: Do I need to re-upload my resume each time?
+            </div>
+            <div class="faq-answer">
+              A: No! Your resume is stored locally and persists across sessions.
+              You only need to upload it once (or when you want to update it).
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">Q: Is my resume data secure?</div>
+            <div class="faq-answer">
+              A: Yes! Your resume is stored locally in your browser and
+              processed on a local backend. It's never sent to external servers.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              Q: Why are some match scores surprising?
+            </div>
+            <div class="faq-answer">
+              A: The AI uses semantic understanding, not just keywords. "Backend
+              Engineer" might match well with "Server Developer" even though the
+              words differ. This helps you discover relevant opportunities you
+              might have missed.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">Q: How do I change my settings?</div>
+            <div class="faq-answer">
+              A: Click the "Settings" link at the bottom of the main popup to
+              customize match thresholds, display preferences, and more.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              Q: The backend isn't running. What do I do?
+            </div>
+            <div class="faq-answer">
+              A: The extension requires a local Python backend to be running.
+              Open your terminal, navigate to the backend folder, and run:
+              python app.py
+            </div>
+          </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="help-section">
+          <h3>🔧 Troubleshooting</h3>
+          <ul>
+            <li>
+              <strong>Extension not showing scores:</strong> Check that the
+              backend is running (python app.py)
+            </li>
+            <li>
+              <strong>Upload failed:</strong> Ensure your file is PDF or DOCX
+              format
+            </li>
+            <li>
+              <strong>Scores not updating:</strong> Try refreshing the job page
+              or clicking "Scan Current Page"
+            </li>
+            <li>
+              <strong>Wrong scores:</strong> Try re-uploading an updated resume
+            </li>
+          </ul>
+        </div>
+
+        <!-- Keyboard Shortcuts -->
+        <div class="help-section">
+          <h3>⌨️ Tips & Tricks</h3>
+          <ul>
+            <li>
+              Adjust the match threshold in Settings if you're seeing too
+              many/few jobs
+            </li>
+            <li>
+              Enable "Hide Low Matches" to completely filter out irrelevant jobs
+            </li>
+            <li>Use "Show Match Reasons" to understand why jobs matched</li>
+            <li>
+              Click on individual job cards to see detailed match breakdowns
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact & Support -->
+        <div class="help-section">
+          <h3>📧 Contact & Support</h3>
+          <div class="contact-info">
+            <p><strong>Found a bug or have a suggestion?</strong></p>
+            <p>
+              GitHub:
+              <a href="https://github.com/Aayush99000" target="_blank"
+                >Report an Issue</a
+              >
+            </p>
+            <p>
+              Email:
+              <a href="mailto:aayushkatoch406@gmail.com"
+                >aayushkatoch406@gmail.com</a
+              >
+            </p>
+            <p style="margin-top: 10px; font-size: 11px">
+              This is an open-source project. Contributions welcome!
+            </p>
+          </div>
+        </div>
+
+        <div class="version-info">
+          Job Filter AI v1.0.0<br />
+          Built with ❤️ by Aayush Katoch
+        </div>
+      </div>
+
+      <div class="footer">
+        <a href="popup.html">← Back</a>
+        <a href="settings.html">Settings</a>
+      </div>
+    </div>
+
+    <script src="help.js"></script>
+  </body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Job Filter AI</title>
+  <link href="popup.css" rel="stylesheet" />
+  <style>
+    /* Additional settings-specific styles */
+    .back-button {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #667eea;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+    
+    .back-button:hover {
+      text-decoration: underline;
+    }
+
+    .settings-section {
+      margin-bottom: 25px;
+    }
+
+    .settings-section h3 {
+      font-size: 15px;
+      color: #374151;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .setting-label {
+      font-size: 13px;
+      color: #374151;
+    }
+
+    .setting-description {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 3px;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #d1d5db;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: #667eea;
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(20px);
+    }
+
+    .number-input {
+      width: 70px;
+      padding: 6px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .select-input {
+      padding: 6px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 13px;
+      background: white;
+    }
+
+    .danger-zone {
+      background: #fee2e2;
+      border: 1px solid #fecaca;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+
+    .danger-zone h3 {
+      color: #991b1b;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .btn-danger {
+      background: #dc2626;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn-danger:hover {
+      background: #b91c1c;
+    }
+
+    .save-notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .save-notification.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>⚙️ Settings</h2>
+    </div>
+
+    <div class="section">
+      <a href="popup.html" class="back-button">
+        ← Back to Main
+      </a>
+
+      <!-- Filtering Settings -->
+      <div class="settings-section">
+        <h3>🎯 Filtering Preferences</h3>
+        
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Match Threshold</div>
+            <div class="setting-description">Minimum match score to show jobs</div>
+          </div>
+          <input 
+            type="number" 
+            id="threshold-setting" 
+            class="number-input"
+            min="0" 
+            max="100" 
+            value="70"
+          >
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Auto-filter on Page Load</div>
+            <div class="setting-description">Automatically scan jobs when visiting job sites</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="auto-filter-setting" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Show Match Reasons</div>
+            <div class="setting-description">Display why jobs matched or didn't match</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="show-reasons-setting" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Hide Low Matches</div>
+            <div class="setting-description">Completely hide jobs below threshold</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="hide-low-setting">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Display Settings -->
+      <div class="settings-section">
+        <h3>🎨 Display</h3>
+        
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Badge Style</div>
+            <div class="setting-description">How match scores are displayed</div>
+          </div>
+          <select id="badge-style-setting" class="select-input">
+            <option value="percentage">Percentage (85%)</option>
+            <option value="score">Score (8.5/10)</option>
+            <option value="stars">Stars (⭐⭐⭐⭐)</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Color Theme</div>
+            <div class="setting-description">Badge color scheme</div>
+          </div>
+          <select id="color-theme-setting" class="select-input">
+            <option value="default">Default (Green/Yellow/Red)</option>
+            <option value="colorblind">Colorblind Friendly</option>
+            <option value="monochrome">Monochrome</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Notification Settings -->
+      <div class="settings-section">
+        <h3>🔔 Notifications</h3>
+        
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Enable Notifications</div>
+            <div class="setting-description">Get notified about high-match jobs</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="notifications-setting">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Notification Threshold</div>
+            <div class="setting-description">Notify only for matches above this score</div>
+          </div>
+          <input 
+            type="number" 
+            id="notification-threshold-setting" 
+            class="number-input"
+            min="0" 
+            max="100" 
+            value="80"
+          >
+        </div>
+      </div>
+
+      <!-- Privacy Settings -->
+      <div class="settings-section">
+        <h3>🔒 Privacy</h3>
+        
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Store Resume Locally</div>
+            <div class="setting-description">Keep resume data on your device only</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="local-storage-setting" checked disabled>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Danger Zone -->
+      <div class="danger-zone">
+        <h3>⚠️ Danger Zone</h3>
+        <p style="font-size: 12px; color: #991b1b; margin-bottom: 10px;">
+          These actions cannot be undone
+        </p>
+        <button id="clear-resume-btn" class="btn-danger">
+          Clear Resume Data
+        </button>
+        <button id="reset-settings-btn" class="btn-danger" style="margin-left: 10px;">
+          Reset All Settings
+        </button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a href="popup.html">← Back</a>
+      <a href="help.html">Help</a>
+    </div>
+  </div>
+
+  <!-- Save Notification -->
+  <div id="save-notification" class="save-notification">
+    ✓ Settings saved!
+  </div>
+
+  <script src="settings.js"></script>
+</body>
+</html>
