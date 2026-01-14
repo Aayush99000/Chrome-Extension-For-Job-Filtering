@@ -62,19 +62,33 @@ def querry_relevant_sections(job_embedding,user_id = "default", top_k =5):
         print(f"⚠️ Error querying embeddings: {str(e)}")
         return []
 
-def clear_user_data(user_id):
+def clear_user_data(user_id="default"):
+    """Clear all data for a specific user"""
+    try:
+        # Get all IDs for this user
+        results = collection.get(where={"user_id": user_id})
+        
+        if results['ids']:
+            collection.delete(ids=results['ids'])
+            print(f"🗑️ Cleared existing data for user: {user_id}")
+    
+    except Exception as e:
+        print(f"⚠️ Error clearing data: {str(e)}")
+
+def get_stored_resume(user_id="default"):
+    """Retrieve stored resume for a specific user"""
     try:
         results = collection.get(
-            where ={"user_id :user_id}"},
-            limit =1
+            where={"user_id": user_id},
+            limit=1
         )
+        
         if results['documents']:
-            #Resturn first section 
-            return results['documents'[0]]
+            # Return first section (or we could reconstruct full text)
+            return results['documents'][0]
         
         return None
+    
     except Exception as e:
-        print(f"⚠️ Error retrieving user data: {str(e)}")
+        print(f"⚠️ Error getting resume: {str(e)}")
         return None
-
-
