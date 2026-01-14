@@ -1,100 +1,135 @@
 (() => {
-    console.log("LinkedIn content script loaded.");
-    let inScanning =false;
-    let settings ={};
+  console.log('🎯 Job Filter AI: LinkedIn script loaded');
 
-    async funtion init() {
-        settings =await getUserSettings();
+  let isScanning = false;
+  let settings = {};
 
-        chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-            if (message.type === 'Scan_Jobs') {
-                scanJobs();
-            } else if (message type == 'Clear_Filters') {
-                clearFilters();
-            }
+  // Initialize
+  async function init() {
+    settings = await getUserSettings();
+    
+    // Listen for messages from popup or background
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      if (message.type === 'SCAN_JOBS') {
+        scanJobs();
+      } else if (message.type === 'CLEAR_FILTERS') {
+        clearFilters();
+      }
     });
 
+    // Auto-scan if enabled
     if (settings.autoFilter) {
-        setTimeout(() => scanJobs(), 3000);
+      // Wait for page to load jobs
+      setTimeout(() => scanJobs(), 2000);
     }
 
+    // Add manual scan button
     addScanButton();
-}
+  }
 
-//add floating scan button
-function addScanButton() {
+  // Add floating scan button
+  function addScanButton() {
     if (document.getElementById('job-filter-scan-btn')) return;
+
     const btn = document.createElement('button');
     btn.id = 'job-filter-scan-btn';
     btn.className = 'job-filter-scan-btn';
-    btn.textContent = 'Scan Jobs';
-    btn.onclick = () => {
-        scanJobs();
-    };
+    btn.textContent = '🎯 Scan Jobs';
+    btn.onclick = scanJobs;
     document.body.appendChild(btn);
-}
+  }
 
-//scan jobs function
-async function scanJobs() {
-    if (isScanning) return;;
+  // Main scan function
+  async function scanJobs() {
+    if (isScanning) return;
     isScanning = true;
 
-    console.log("Scanning jobs...");
+    console.log('🔍 Scanning LinkedIn jobs...');
 
-    const jobCards = document.querrySelectorAll('.job-card-container ,.job-search-results__list-item, .scaffold-layout__list-item');
+    // LinkedIn job card selectors (may need updates as LinkedIn changes)
+    const jobCards = document.querySelectorAll(
+      '.jobs-search-results__list-item, .job-card-container, .scaffold-layout__list-item'
+    );
+
     if (jobCards.length === 0) {
-        console.log('No job cards found on this page.');
-        isScanning = false;
-        return;
+      console.log('⚠️ No job cards found');
+      isScanning = false;
+      return;
     }
-    console.log(`Found ${jobCards.length} job cards.`);
+
+    console.log(`📊 Found ${jobCards.length} job cards`);
 
     let matchedCount = 0;
 
     for (const card of jobCards) {
-        if( card.querrySelector('.job-filter-badge')) continue;
-        const jobData = extractJobData(card);
-        if (!jobData) continue;
+      // Skip if already processed
+      if (card.querySelector('.job-filter-badge')) continue;
 
-        //Get match score from background
-        const matchResult = await matchJob(jobData);
+      const jobData = extractJobData(card);
+      if (!jobData) continue;
 
-        addMatchIndicator(card , matchResult);
+      // Get match score from backend
+      const matchResult = await matchJob(jobData);
 
-        //Dim low matchin jobs
-        if (matchResult.score*100 < settings.Threshold) {
-            card.classList.add('job-filter-dimmed');
-        } else {
-            matchedCount++;
-        }
+      // Add visual indicator
+      addMatchIndicator(card, matchResult);
+
+      // Dim low-match jobs
+      if (matchResult.score * 100 < settings.threshold) {
+        card.classList.add('job-filter-dimmed');
+      } else {
+        matchedCount++;
+      }
     }
 
-    //update status
-    await updateStatus(jobCards.length , matchedCount);
+    // Update stats
+    await updateStats(jobCards.length, matchedCount);
 
-    console.log('Job scanning completed : ${matchedCount}/${jobCards.length} jobs matched');
+    console.log(`✅ Scan complete: ${matchedCount}/${jobCards.length} jobs matched`);
     isScanning = false;
-}
+  }
 
-//extract job data from card
-function extractJobData(card) {
+  // Extract job data from LinkedIn card
+  function extractJobData(card) {
     try {
-        const title = card.querrySelector('.job-card-list__title, .job-card-container__link, .job-search-card__title').innerText.trim();
-        const company = card.querrySelector('.job-card-container__company-name, .job-card-list__company-name, .job-search-card__subtitle').innerText.trim();
-        const location = card.querrySelector('.job-card-container__metadata-item, .job-card-list__location, .job-search-card__location').innerText.trim();
-        const description = card.querrySelector('.job-card-container__description, .job-card-list__description, .job-search-card__snippet')?.innerText.trim() || '';
-        
-        return { title, company, location, description , url: window.location.href };
-    } catch (error) {
-        console.error('Error extracting job data:', error);
-        return null;
-    }
-}
+      // LinkedIn DOM selectors (adjust as needed)
+      const titleEl = card.querySelector(
+        '.job-card-list__title, .artdeco-entity-lockup__title, .job-card-container__link'
+      );
+      
+      const companyEl = card.querySelector(
+        '.job-card-container__primary-description, .artdeco-entity-lockup__subtitle'
+      );
+      
+      const locationEl = card.querySelector(
+        '.job-card-container__metadata-item, .artdeco-entity-lockup__caption'
+      );
 
-//add match indicator to job card
-function addMatchIndicator(card , matchResults){
-    const score = Math.round(matchResults.score * 100);
-}
+      const title = titleEl?.innerText?.trim() || 'Unknown Title';
+      const company = companyEl?.innerText?.trim() || 'Unknown Company';
+      const location = locationEl?.innerText?.trim() || 'Unknown Location';
+
+      // Try to get job description (if available)
+      const descriptionEl = card.querySelector('.job-card-container__job-insight');
+      const description = descriptionEl?.innerText?.trim() || '';
+
+      return {
+        title,
+        company,
+        location,
+        description,
+        platform: 'linkedin'
+      };
+    } catch (error) {
+      console.error('Error extracting job data:', error);
+      return null;
+    }
+  }
+
+  // Add match indicator to job card
+  function addMatchIndicator(card, matchResult) {
+    const score = Math.round(matchResult.score * 100);
+    
     // Determine badge color
     let badgeClass = 'low';
     if (score >= 70) badgeClass = 'high';
