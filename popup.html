@@ -9,20 +9,20 @@
   <body>
     <div class="container">
       <div class="header">
-        <img src="" alt="" class="logo" />
+        <img src="assets/img.png" alt="" class="logo" />
         <h2>Job Filter AI</h2>
       </div>
-      <div class="section" id="upload section">
+      <div class="section" id="upload-section">
         <h3>🔖 Upload your Resume</h3>
         <div class="upload-area">
           <input
             type="file"
-            id="resumeUpload"
+            id="resume-upload"
             accept=".pdf,.doc,.docx"
             hidden
           />
-          <label for="resumeUpload" class="upload-btn">Choose File</label>
-          <span id="file-Name">🐵No file chosen</span>
+          <label for="resume-upload" class="upload-btn">Choose File</label>
+          <span id="file-name">🐵No file chosen</span>
         </div>
         <button id="process-btn" class="btn btn-primary" disabled>
           Process Resume
@@ -32,10 +32,10 @@
     </div>
 
     <!--Resume info section-->
-    <div class="section" id="resume-info-section" style="display: none">
+    <div class="section" id="resume-info" style="display: none">
       <h3>Resume Loaded</h3>
       <div id="info-card">
-        <p><strong>File:</strong> <span id="resume-name"></span></p>
+        <p><strong>File:</strong> <span id="resume-file-name"></span></p>
         <p>
           <strong>Status:</strong> <span id="status-badge success">Active</span>
         </p>
@@ -46,7 +46,7 @@
     </div>
 
     <!--Filter Settings-->
-    <div class="section" id="filter-setting" style="display: none">
+    <div class="section" id="filter-settings" style="display: none">
       <h3>⚙️ Filter Settings</h3>
 
       <div class="setting-item">

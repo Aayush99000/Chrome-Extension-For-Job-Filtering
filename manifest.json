@@ -17,25 +17,25 @@
     {
       "matches": ["https://*.linkedin.com/*"],
       "js": ["content/linkedin.js"],
-      "css": ["content/styles.css"]
+      "css": ["assets/style.css"]
     },
     {
       "matches": ["https://*.handshake.com/*"],
       "js": ["content/handshake.js"],
-      "css": ["content/styles.css"]
+      "css": ["assets/style.css"]
     },
     {
       "matches": ["https://*.glassdoor.com/*"],
       "js": ["content/glassdoor.js"],
-      "css": ["content/styles.css"]
+      "css": ["assets/style.css"]
     }
   ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "assets/ext-icon.png",
-      "24": "assets/ext-icon.png",
-      "32": "assets/ext-icon.png"
+      "16": "assets/img.png",
+      "24": "assets/img.png",
+      "32": "assets/img.png"
     },
     "default_title": "Job Filter AI"
   },
@@ -46,10 +46,10 @@
     }
   ],
   "icons": {
-    "16": "assets/ext-icon.png",
-    "24": "assets/ext-icon.png",
-    "32": "assets/ext-icon.png",
-    "48": "assets/ext-icon.png",
-    "128": "assets/ext-icon.png"
+    "16": "assets/img.png",
+    "24": "assets/img.png",
+    "32": "assets/img.png",
+    "48": "assets/img.png",
+    "128": "assets/img.png"
   }
 }
